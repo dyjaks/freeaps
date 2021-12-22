@@ -2,9 +2,9 @@
   Localizable.strings
   FreeAPS X
 */
+/* -------------------------------- */
 /* Bolus screen when adding insulin */
-
-"Add insulin without actually bolusing" = "Gerçekten bolus yapmadan insülin ekleyin";
+"Add insulin without actually bolusing" = "Bolus yapmadan insülin ekleyin";
 
 /* Add insulin from source outside of pump */
 "Add %@ without bolusing" = "Bolus yapmadan %@ ekleyin";
@@ -17,10 +17,10 @@
 "Continue without bolus" = "Bolus yapmadan devam edin";
 
 /* Header */
-"Enact Bolus" = "Bolus Enjekte et";
+"Enact Bolus" = "Bolus Gönder";
 
 /* Button */
-"Enact bolus" = "Bolus enjekte et";
+"Enact bolus" = "Bolus gönder";
 
 /*  */
 "Insulin recommended" = "Önerilen insülin";
@@ -71,7 +71,7 @@
 "Add Carbs " = "Karbonhidrat Ekle ";
 
 /*  */
-"Amount Carbs" = "Miktar Karbonhidrat";
+"Amount Carbs" = "Karbonhidrat miktarı";
 
 /* Grams unit */
 "grams" = "gram";
@@ -130,8 +130,14 @@
 /* Upper temp target limit */
 "Top target" = "Üst hedef";
 
+/*  Temp target set for ... minutes */
+"for" = "için";
+
+/*  Temp target set for ... minutes */
+"min" = "dk";
+
 /*  */
-"Autotune" = "Autotune";
+"Autotune" = "Atoayar";
 
 /*  */
 "Basal profile" = "Bazal profil";
@@ -140,7 +146,7 @@
 "Carb ratio" = "Karbonhidrat oranı";
 
 /*  */
-"Delete autotune data" = "Autotune verilerini sil";
+"Delete autotune data" = "Atoayar verilerini sil";
 
 /*  */
 "Run now" = "Şimdi çalıştır";
@@ -152,7 +158,7 @@
 "Sensitivity" = "Duyarlılık";
 
 /*  */
-"Use Autotune" = "use Autotune";
+"Use Autotune" = "Otoayar kullan";
 
 /* Add profile basal */
 "Add" = "Ekle";
@@ -170,7 +176,7 @@
 "Saving..." = "Kaydediliyor...";
 
 /*  */
-"Schedule" = "Planlama";
+"Schedule" = "Zamanlama";
 
 /*  */
 "starts at" = "de başlar";
@@ -194,7 +200,7 @@
 "Calculated Sensitivity" = "Hesaplanan Duyarlılık";
 
 /*  */
-"Insulin Sensitivities" = "İnsülin Duyarlılık Faktörü";
+"Insulin Sensitivities" = "İnsülin Duyarlılığı";
 
 /* */
 "Sensitivity Ratio" = "Duyarlılık Faktörü (ISF)";
@@ -213,7 +219,7 @@
 
 /* Enact
 Enact a temp Basal or a temp target */
-"Enact" = "Enjekte et";
+"Enact" = "Başlat";
 
 /* */
 "Manual Temp Basal" = "Manuel Geçici Bazal";
@@ -222,7 +228,7 @@ Enact a temp Basal or a temp target */
 "Allow uploads" = "Veri yüklemeye izin ver";
 
 /* API secret in NS */
-"API secret" = "API secret";
+"API secret" = "API parolası";
 
 /* Connect to NS */
 "Connect" = "Bağlan";
@@ -270,7 +276,7 @@ Enact a temp Basal or a temp target */
 "Remote control" = "Uzaktan kontrol";
 
 /* Add Medtronic pump */
-"Add Medtronic" = "Medtronic ekle";
+"Add Medtronic" = "Medtronic Pompa ekle";
 
 /* Add Omnipod pump */
 "Add Omnipod" = "Omnipod ekle";
@@ -282,10 +288,10 @@ Enact a temp Basal or a temp target */
 "Model" = "Model";
 
 /*  */
-"Pump config" = "Pompa Konfigurasyonu";
+"Pump config" = "Pompa Yapılandırması";
 
 /*  */
-"Delivery limits" = "İletim Kısıtlamaları";
+"Delivery limits" = "İletim Limitleri";
 
 /*  */
 "Duration of Insulin Action" = "İnsülin Etki Süresi (İES)";
@@ -399,21 +405,30 @@ Enact a temp Basal or a temp target */
 "Transmitter ID" = "Verici ID";
 
 /* Other CGM setting */
-"Other" = "Diğeri";
+"Other" = "Diğer";
 
 /* Whatch app alert */
-"Set temp targets presets on iPhone first" = "Set temp targets presets on iPhone first";
+"Set temp targets presets on iPhone first" = "Önce iPhone'da geçici hedef ön ayarlarını belirleyin";
 
 /* Updating Watch app */
-"Updating..." = "Updating...";
+"Updating..." = "Güncelleniyor...";
 
 /* Header for Temp targets in Watch app */
-"Temp Targets" = "Temp Targets";
+"Temp Targets" = "Geçici Hedefler";
+
+/* Delete carbs from Treatments list*/
+"Delete carbs?" = "Karbonhidratları sil?";
+
+/* Treatments list */
+"Treatments" = "Tedaviler";
+
+/* " min" in Treatments list */
+" min" = " dk";
 
 
-/* Calendar and Libre transmitter settings --------------*/
+/* Calendar and Libre transmitter settings ---------------
+ */
 /* */
-
 "Configure Libre Transmitter" = "Libre Vericiyi Yapılandır";
 
 /* */
@@ -426,7 +441,7 @@ Enact a temp Basal or a temp target */
 "Calendar" = "Takvim";
 
 /* */
-"Other" = "Diğeri";
+"Other" = "Diğer";
 
 /* */
 "Libre Transmitter" = "Libre Vericisi";
@@ -438,13 +453,13 @@ Enact a temp Basal or a temp target */
 "Bluetooth Transmitters" = "Bluetooth Vericileri";
 
 /* */
-"Modes" = "Mod";
+"Modes" = "Modlar";
 
 /* Libre 2 Direct */
 "Libre 2 Direct" = "Libre 2 Direk";
 
 /* */
-"Select the third party transmitter you want to connect to" = "Bağlanmak istediğiniz üçüncü parti vericiyi seçin";
+"Select the third party transmitter you want to connect to" = "Bağlanmak istediğiniz harici vericiyi seçin";
 
 /* State was restored */
 "State was restored" = "Durum yenilendi";
@@ -481,9 +496,6 @@ Enact a temp Basal or a temp target */
 
 /* */
 "Remove All" = "Tümünü kaldır";
-
-/* */
-"Calibrations" = "Kalibrasyonlar";
 
 /* */
 "About the Process" = "Süreç Hakkında";
@@ -670,6 +682,7 @@ Enact a temp Basal or a temp target */
 
 /* */
 "Delete CGM" = "CGM'i Sil";
+
 /* */
 "Are you sure you want to remove this cgm from loop?" = "Bu CGM'i FreeAPS X'den kaldırmak istediğinizden emin misiniz?";
 
@@ -854,12 +867,19 @@ Enact a temp Basal or a temp target */
 "Show glucose on the app badge" = "Uygulama rozetinde glikozu göster";
 
 /* */
-"Backfill glucose" = "Backfill glucose";
+"Backfill glucose" = "Geri doldurma glikoz";
+
+/* About this source */
+"About this source" = "Bu kaynak hakkında";
+
+/* */
+"Bolus failed" = "Bolus başarısız";
+
+/* */
+"Bolus failed or inaccurate. Check pump history before repeating." = "Bolus başarısız veya hatalı. Tekrarlamadan önce pompa geçmişini kontrol edin.";
 
 
-/* Headers for settings ------------------- */
-
-
+/* Headers for settings ----------------------- */
 "OpenAPS main settings" = "OpenAPS ana ayarları";
 
 "OpenAPS SMB settings" = "OpenAPS SMB ayarları";
@@ -868,15 +888,48 @@ Enact a temp Basal or a temp target */
 
 "OpenAPS other settings" = "OpenAPS diğer ayarları";
 
-
 /* Glucose Simulator CGM */
 "Glucose Simulator" = "Glikoz Simülatörü";
 
 /* Restored state message */
 "Bluetooth State restored (APS restarted?). Found %d peripherals, and connected to %@ with identifier %@" = "Bluetooth Durumu geri yüklendi (APS yeniden başlatıldı mı?). %d çevre birimi bulundu ve %@ tanımlayıcısı ile %@'a bağlandı";
 
+/* Shared app group */
+"Shared app group" = "Paylaşılan uygulama grubu";
 
-/*
+/* Native G6 app */
+"Native G6 app" = "Yerel G6 uygulaması";
+
+/* Native G5 app */
+"Native G5 app" = "Yerel G5 uygulaması";
+
+/* Minilink transmitter */
+"Minilink transmitter" = "Minilink Sensörü";
+
+/* Simple simulator */
+"Simple simulator" = "Basit simülatör";
+
+/* Direct connection with Libre 1 transmitters or Libre 2 */
+"Direct connection with Libre 1 transmitters or Libre 2" = "Libre 1 veya Libre 2 vericileri ile doğrudan bağlantı";
+
+/* Online or internal server */
+"Online or internal server" = "Çevrimiçi veya dahili sunucu";
+
+/* HealthKit intergration --------------------*/
+/* */
+"Apple Health" = "Apple Sağlık Uygulaması";
+
+/* */
+"Connect to Apple Health" = "Apple Sağlık Uygulamasına bağlan";
+
+/* Show when have not permissions for writing to Health */
+"For write data to Apple Health you must give permissions in Settings > Health > Data Access" = "Apple Sağlık Uygulamasına veri yazmak için Ayarlar > Sağlık > Veri Erişimi'nde izinler vermelisiniz";
+
+/* */
+"After you create glucose records in the Health app, please open FreeAPS X to help us guaranteed transfer changed data" = "Sağlık uygulamasında glikoz kayıtları oluşturduktan sonra, değiştirilen verileri aktarmayı garanti etmemize yardımcı olmak için lütfen FreeAPS X'i açın";
+/* --------------------------------------------
+
+
   Infotexts from openaps.docs and androidaps.docs
   FreeAPS X
 */
@@ -985,7 +1038,7 @@ Enact a temp Basal or a temp target */
 "Smallest possible bolus amount" = "Mümkün olan en küçük bolus miktarı";
 
 /* "Insulin Peak Time" */
-"Time of maximum blood glucose lowering effect of insulin, in minutes. Beware: Oref assumes for ultra-papid (Lyumjev) & rapid-acting (Fiasp) curves minimal (35 & 50 min) and maximal (100 & 120 min) applicable insulinPeakTimes. Using a custom insulinPeakTime outside these bounds will result in issues with FreeAPS-X, longer loop calculations and possible red loops." = "İnsülinin maksimum kan şekerini düşürücü etkisinin dakika cinsinden süresi. Dikkat: Oref, ultra-papid (Lyumjev) ve hızlı etkili (Fiasp) eğrilerin minimum (35 ve 50 dakika) ve maksimum (100 ve 120 dakika) uygulanabilir insülinPeakTimes olduğunu varsayar. Bu sınırların dışında özel bir insülinPeakTime kullanılması, FreeAPS-X, daha uzun döngü hesaplamaları ve olası kırmızı döngülerle ilgili sorunlara neden olacaktır.";
+"Time of maximum blood glucose lowering effect of insulin, in minutes. Beware: Oref assumes for ultra-rapid (Lyumjev) & rapid-acting (Fiasp) curves minimal (35 & 50 min) and maximal (100 & 120 min) applicable insulinPeakTimes. Using a custom insulinPeakTime outside these bounds will result in issues with FreeAPS-X, longer loop calculations and possible red loops." = "İnsülinin maksimum kan şekerini düşürücü etkisinin dakika cinsinden süresi. Dikkat: Oref, ultra-rapid (Lyumjev) ve hızlı etkili (Fiasp) eğrilerin minimum (35 ve 50 dakika) ve maksimum (100 ve 120 dakika) uygulanabilir insülinPeakTimes olduğunu varsayar. Bu sınırların dışında özel bir insülinPeakTime kullanılması, FreeAPS-X, daha uzun döngü hesaplamaları ve olası kırmızı döngülerle ilgili sorunlara neden olacaktır.";
 
 /* "Carbs Req Threshold" */
 "Grams of carbsReq to trigger a pushover. Defaults to 1 (for 1 gram of carbohydrate). Can be increased if you only want to get Pushover for carbsReq at X threshold." = "Bir itmeyi tetiklemek için gram karbonhidrat. Varsayılan 1'dir (1 gram karbonhidrat için). Yalnızca X eşiğinde carbsReq için itme almak istiyorsanız artırılabilir.";

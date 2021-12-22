@@ -44,6 +44,7 @@
 		<string>dexcomcgm</string>
 		<string>diabox</string>
 		<string>spikeapp</string>
+		<string>libredirect</string>
 	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
@@ -64,6 +65,10 @@
 	<string>Calendar is used to create a new glucose events.</string>
 	<key>NSFaceIDUsageDescription</key>
 	<string>For authorized acces to bolus</string>
+	<key>NSHealthShareUsageDescription</key>
+	<string>Health App is used to store blood glucose data</string>
+	<key>NSHealthUpdateUsageDescription</key>
+	<string>Health App is used to store blood glucose data</string>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>

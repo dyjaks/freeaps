@@ -2,6 +2,8 @@ import Combine
 import Foundation
 
 struct AppGroupSource: GlucoseSource {
+    let from: String
+
     func fetch() -> AnyPublisher<[BloodGlucose], Never> {
         guard let suiteName = Bundle.main.appGroupSuiteName,
               let sharedDefaults = UserDefaults(suiteName: suiteName)
@@ -30,6 +32,10 @@ struct AppGroupSource: GlucoseSource {
                 let timestamp = sgv["DT"] as? String,
                 let date = parseDate(timestamp)
             else { continue }
+
+            if let from = sgv["from"] as? String {
+                guard from == self.from else { continue }
+            }
 
             results.append(
                 BloodGlucose(
@@ -62,7 +68,7 @@ struct AppGroupSource: GlucoseSource {
     }
 
     func sourceInfo() -> [String: Any]? {
-        [GlucoseSourceKey.description.rawValue: "Group ID: \(String(describing: Bundle.main.appGroupSuiteName))"]
+        [GlucoseSourceKey.description.rawValue: "Group ID: \(Bundle.main.appGroupSuiteName ?? "Not set"))"]
     }
 }
 

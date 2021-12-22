@@ -12,18 +12,30 @@ enum GlucoseSourceKey: String {
     case description
 }
 
+enum NotificationAction: String {
+    static let key = "action"
+
+    case snooze
+}
+
+protocol BolusFailureObserver {
+    func bolusDidFail()
+}
+
 final class BaseUserNotificationsManager: NSObject, UserNotificationsManager, Injectable {
     private enum Identifier: String {
         case glucocoseNotification = "FreeAPS.glucoseNotification"
         case carbsRequiredNotification = "FreeAPS.carbsRequiredNotification"
         case noLoopFirstNotification = "FreeAPS.noLoopFirstNotification"
         case noLoopSecondNotification = "FreeAPS.noLoopSecondNotification"
+        case bolusFailedNotification = "FreeAPS.bolusFailedNotification"
     }
 
     @Injected() private var settingsManager: SettingsManager!
     @Injected() private var broadcaster: Broadcaster!
     @Injected() private var glucoseStorage: GlucoseStorage!
     @Injected() private var apsManager: APSManager!
+    @Injected() private var router: Router!
     @Injected(as: FetchGlucoseManager.self) private var sourceInfoProvider: SourceInfoProvider!
 
     @Persisted(key: "UserNotificationsManager.snoozeUntilDate") private var snoozeUntilDate: Date = .distantPast
@@ -37,6 +49,7 @@ final class BaseUserNotificationsManager: NSObject, UserNotificationsManager, In
         injectServices(resolver)
         broadcaster.register(GlucoseObserver.self, observer: self)
         broadcaster.register(SuggestionObserver.self, observer: self)
+        broadcaster.register(BolusFailureObserver.self, observer: self)
 
         requestNotificationPermissionsIfNeeded()
         sendGlucoseNotification()
@@ -137,6 +150,28 @@ final class BaseUserNotificationsManager: NSObject, UserNotificationsManager, In
         }
     }
 
+    private func notifyBolusFailure() {
+        ensureCanSendNotification {
+            let title = NSLocalizedString("Bolus failed", comment: "Bolus failed")
+            let body = NSLocalizedString(
+                "Bolus failed or inaccurate. Check pump history before repeating.",
+                comment: "Bolus failed or inaccurate. Check pump history before repeating."
+            )
+
+            let content = UNMutableNotificationContent()
+            content.title = title
+            content.body = body
+            content.sound = .default
+
+            self.addRequest(
+                identifier: .noLoopFirstNotification,
+                content: content,
+                deleteOld: true,
+                trigger: nil
+            )
+        }
+    }
+
     private func sendGlucoseNotification() {
         addAppBadge(glucose: nil)
 
@@ -161,11 +196,9 @@ final class BaseUserNotificationsManager: NSObject, UserNotificationsManager, In
             case .low:
                 titles.append(NSLocalizedString("LOWALERT!", comment: "LOWALERT!"))
                 notificationAlarm = true
-                self.playSoundIfNeeded()
             case .high:
                 titles.append(NSLocalizedString("HIGHALERT!", comment: "HIGHALERT!"))
                 notificationAlarm = true
-                self.playSoundIfNeeded()
             }
 
             if self.snoozeUntilDate > Date() {
@@ -185,7 +218,9 @@ final class BaseUserNotificationsManager: NSObject, UserNotificationsManager, In
             content.body = body
 
             if notificationAlarm {
+                self.playSoundIfNeeded()
                 content.sound = .default
+                content.userInfo[NotificationAction.key] = NotificationAction.snooze.rawValue
             }
 
             self.addRequest(identifier: .glucocoseNotification, content: content, deleteOld: true)
@@ -240,7 +275,7 @@ final class BaseUserNotificationsManager: NSObject, UserNotificationsManager, In
                     "\n"
                         + String(
                             format: NSLocalizedString("Transmitter: %@%%", comment: "Transmitter: %@%%"),
-                            transmitterBattery
+                            "\(transmitterBattery)"
                         )
                 )
             }
@@ -290,17 +325,21 @@ final class BaseUserNotificationsManager: NSObject, UserNotificationsManager, In
         let request = UNNotificationRequest(identifier: identifier.rawValue, content: content, trigger: trigger)
 
         if deleteOld {
-            center.removeDeliveredNotifications(withIdentifiers: [identifier.rawValue])
-            center.removePendingNotificationRequests(withIdentifiers: [identifier.rawValue])
+            DispatchQueue.main.async {
+                self.center.removeDeliveredNotifications(withIdentifiers: [identifier.rawValue])
+                self.center.removePendingNotificationRequests(withIdentifiers: [identifier.rawValue])
+            }
         }
 
-        center.add(request) { error in
-            if let error = error {
-                warning(.service, "Unable to addNotificationRequest", error: error)
-                return
-            }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            self.center.add(request) { error in
+                if let error = error {
+                    warning(.service, "Unable to addNotificationRequest", error: error)
+                    return
+                }
 
-            debug(.service, "Sending \(identifier) notification")
+                debug(.service, "Sending \(identifier) notification")
+            }
         }
     }
 
@@ -313,7 +352,7 @@ final class BaseUserNotificationsManager: NSObject, UserNotificationsManager, In
     static let soundID: UInt32 = 1336
     private static var stopPlaying = false
 
-    private func playSound(times: Int = 3) {
+    private func playSound(times: Int = 1) {
         guard times > 0, !Self.stopPlaying else {
             return
         }
@@ -362,6 +401,12 @@ extension BaseUserNotificationsManager: SuggestionObserver {
     }
 }
 
+extension BaseUserNotificationsManager: BolusFailureObserver {
+    func bolusDidFail() {
+        notifyBolusFailure()
+    }
+}
+
 extension BaseUserNotificationsManager: UNUserNotificationCenterDelegate {
     func userNotificationCenter(
         _: UNUserNotificationCenter,
@@ -369,5 +414,21 @@ extension BaseUserNotificationsManager: UNUserNotificationCenterDelegate {
         withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void
     ) {
         completionHandler([.banner, .badge, .sound])
+    }
+
+    func userNotificationCenter(
+        _: UNUserNotificationCenter,
+        didReceive response: UNNotificationResponse,
+        withCompletionHandler completionHandler: @escaping () -> Void
+    ) {
+        defer { completionHandler() }
+        guard let actionRaw = response.notification.request.content.userInfo[NotificationAction.key] as? String,
+              let action = NotificationAction(rawValue: actionRaw)
+        else { return }
+
+        switch action {
+        case .snooze:
+            router.mainModalScreen.send(.snooze)
+        }
     }
 }

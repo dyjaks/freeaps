@@ -107,9 +107,7 @@ extension Snooze {
         }
 
         var snoozeDesc: some View {
-            VStack(alignment: .leading) {
-                Text(snoozeDescription)
-            }
+            Text(snoozeDescription).lineLimit(0)
         }
 
         var body: some View {
